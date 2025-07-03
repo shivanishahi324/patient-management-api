@@ -3,6 +3,8 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, computed_field
 from typing import Annotated, Literal, Optional
 import json
+import pickle
+
 
 app = FastAPI()
 
@@ -169,6 +171,26 @@ def add_patient(patient_id: str, patient: dict):
     with open("patients.json", "w") as f:
         json.dump(data, f, indent=4)
     return {"message": "Patient added successfully!"}
+
+
+
+# ✅ LOAD kar rahe hain trained model
+with open("disease_model.pkl", "rb") as f:
+    model = pickle.load(f)
+
+with open("tfidf_vectorizer.pkl", "rb") as f:
+    vectorizer = pickle.load(f)
+
+from pydantic import BaseModel
+
+class SymptomInput(BaseModel):
+    text: str
+
+@app.post("/predict")
+def predict_disease(symptoms: SymptomInput):
+    vect = vectorizer.transform([symptoms.text])
+    prediction = model.predict(vect)[0]
+    return {"prediction": prediction}
 
 
 
