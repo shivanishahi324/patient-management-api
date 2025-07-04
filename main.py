@@ -6,6 +6,7 @@ import json
 import pickle
 
 
+
 app = FastAPI()
 
 class Patient(BaseModel):
