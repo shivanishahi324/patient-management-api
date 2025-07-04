@@ -16,8 +16,41 @@ It is a simple RESTful API that manages patient records, automatically calculate
 
 ---
 
-## Tech Stack Used
+---
 
+##  New Feature: Disease Prediction using ML
+
+The API now includes a machine learning model that predicts possible diseases based on symptoms input.
+
+How It Works:
+
+- Uses TF-IDF Vectorizer to process symptom text  
+- Trained on a real-world medical dataset  
+- Employs a Naive Bayes classifier for prediction  
+
+Sample Request:
+
+POST /predict
+
+Request Body:
+```json
+{
+  "text": "weight loss, frequent urination and thirst"
+}
+Response:
+
+json
+Copy code
+{
+  "prediction": "Diabetes"
+}
+
+Try the live API here:
+https://patient-management-api-oljn.onrender.com/docs
+
+```
+## Tech Stack Used
+```bash
 - Python 3.10+
 - FastAPI
 - Pydantic
